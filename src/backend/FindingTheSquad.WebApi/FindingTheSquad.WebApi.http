@@ -3,6 +3,7 @@
 
 ### ============================================
 ### SMOKE TESTS - FindingTheSquad API
+### Backend är PROD-READY! ✅
 ### ============================================
 
 ### 1. REGISTER - Skapa ny användare
@@ -17,7 +18,7 @@ Content-Type: {{contentType}}
 
 ###
 
-### 2. LOGIN - Logga in och få token
+### 2. LOGIN - Logga in och få JWT token
 POST {{baseUrl}}/api/auth/login
 Content-Type: {{contentType}}
 
@@ -28,45 +29,42 @@ Content-Type: {{contentType}}
 
 ###
 
-### 3. CREATE LFG SESSION - Skapa en LFG session (kräver autentisering)
-POST {{baseUrl}}/api/lfg
-Content-Type: {{contentType}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
-
-
-{
-  "playerName": "TestPlayer",
-  "gameTitle": "Valorant",
-  "discordTag": "TestPlayer#1234",
-  "description": "Letar efter 2 stycken för rankad play"
-}
-
-###
-
-### 4. GET ALL LFG SESSIONS - Hämta alla sessioner
-GET {{baseUrl}}/api/lfg
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
-
-###
-
-### 5. GET ALL USERS - Hämta alla registrerade användare
+### 3. GET ALL USERS - Hämta alla registrerade användare
 GET {{baseUrl}}/api/auth/users
 
 ###
 
-### 6. GET ALL LFG SESSIONS - Hämta alla sessioner
+### 4. CREATE LFG SESSION - Skapa en ny LFG session (kräver auth)
+POST {{baseUrl}}/api/lfg
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
+
+{
+  "playerName": "Kylo",
+  "gameTitle": "Valorant",
+  "discordTag": "kylo_ren#1234",
+  "description": "Letar efter 2 stycken för rankad 5-stack"
+}
+
+###
+
+### 5. GET ALL LFG SESSIONS - Hämta alla LFG sessioner (kräver auth)
 GET {{baseUrl}}/api/lfg
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
 
 ### ============================================
-### SMOKE TEST INSTRUKTIONER:
+### INSTRUKTIONER:
 ### ============================================
 ### 1. Starta API: cd src/backend/FindingTheSquad.WebApi && dotnet run
-### 2. Kör #1 (Register) - Notera svaret
-### 3. Kör #2 (Login) - Kopiera "token" från svaret
-### 4. Sätt token i #3 och #4 vid "Authorization: Bearer"
-### 5. Kör #3 (Create) - Ska returnera ID
-### 6. Kör #4 (Get All) - Ska returnera lista med sessioner
+### 2. Kör testen i ordning (#1-#5)
+### 3. För #2 (Login): Kopiera "token" från response
+### 4. Sätt token i #4 och #5 vid "Authorization: Bearer [TOKEN]"
+### 5. Alla should return 200 OK!
 ###
-### Alla ska returnera 200 OK!
+### API Endpoints klara för FRONTEND:
+### ✅ POST   /api/auth/register     - Skapa användare
+### ✅ POST   /api/auth/login        - Logga in
+### ✅ GET    /api/auth/users        - Lista alla users
+### ✅ POST   /api/lfg               - Skapa LFG session
+### ✅ GET    /api/lfg               - Lista alla sessions
 ### ============================================
