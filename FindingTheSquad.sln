@@ -13,7 +13,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindingTheSquad.Infrastruct
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FindingTheSquad.WebApi", "src\backend\FindingTheSquad.WebApi\FindingTheSquad.WebApi.csproj", "{D91D1219-15F7-41F8-955E-3CA4249BA274}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "frontend", "{7B29BE17-3B5C-4C6B-A14E-15B93F744224}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "frontend", "src\frontend", "{7B29BE17-3B5C-4C6B-A14E-15B93F744224}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

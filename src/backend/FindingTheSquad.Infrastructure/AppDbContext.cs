@@ -34,6 +34,7 @@ public class AppDbContext : DbContext
             entity.Property(e => e.PasswordHash).IsRequired();
             entity.HasIndex(e => e.Email).IsUnique();
             entity.HasIndex(e => e.Username).IsUnique();
+            entity.HasIndex(e => e.DiscordId).IsUnique();
         });
     }
 }

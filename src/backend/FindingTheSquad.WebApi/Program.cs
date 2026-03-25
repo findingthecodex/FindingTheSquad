@@ -52,6 +52,16 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddApplication();
 builder.Services.AddControllers();
+builder.Services.AddHttpClient();
+
+// Register Discord OAuth Options
+var discordOptions = new FindingTheSquad.Application.Auth.Commands.DiscordOAuthOptions
+{
+    ClientId = builder.Configuration["Discord:ClientId"] ?? "",
+    ClientSecret = builder.Configuration["Discord:ClientSecret"] ?? "",
+    RedirectUri = builder.Configuration["Discord:RedirectUri"] ?? ""
+};
+builder.Services.AddSingleton(discordOptions);
 
 builder.Services.AddScoped<ILfgRepository, LfgRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
@@ -79,11 +89,31 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Apply migrations automatically on startup
+// Apply migrations and seed data automatically on startup
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
+    System.Threading.Thread.Sleep(500); // Small delay to ensure DB schema is ready
+    
+    // Seed test user if database is empty
+    try
+    {
+        if (!dbContext.Users.Any())
+        {
+            var testUser = new FindingTheSquad.Domain.User(
+                "kyle.ren@gmail.com",
+                "kyloren",
+                BCrypt.Net.BCrypt.HashPassword("kyloren123!")
+            );
+            dbContext.Users.Add(testUser);
+            dbContext.SaveChanges();
+        }
+    }
+    catch (Exception ex)
+    {
+        Console.WriteLine($"Seed warning: {ex.Message}");
+    }
 }
 
 app.Run();
