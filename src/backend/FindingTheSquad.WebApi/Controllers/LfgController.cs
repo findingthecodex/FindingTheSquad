@@ -1,4 +1,4 @@
-using FindingTheSquad.Domain;
+using FindingTheSquad.Application.LfgSessions.Queries;
 using FindingTheSquad.Application.LfgSessions.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -21,5 +21,12 @@ public class LfgController : ControllerBase
     {
         var id = await _mediator.Send(command);
         return Ok(id);
+    }
+    
+    [HttpGet]
+    public async Task<IActionResult> GetAll()
+    {
+        var sessions = await _mediator.Send(new GetLfgSessionsQuery());
+        return Ok(sessions);
     }
 }

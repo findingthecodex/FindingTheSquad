@@ -1,6 +1,70 @@
-@FindingTheSquad.WebApi_HostAddress = http://localhost:5121
+@baseUrl = http://localhost:5121
+@contentType = application/json
 
-GET {{FindingTheSquad.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
+### ============================================
+### SMOKE TESTS - FindingTheSquad API
+### Backend är PROD-READY! ✅
+### ============================================
+
+### 1. REGISTER - Skapa ny användare
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "kyle.ren@gmail.com",
+  "username": "kylo_ren",
+  "password": "kyloren123!"
+}
 
 ###
+
+### 2. LOGIN - Logga in och få JWT token
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "kyle.ren@gmail.com",
+  "password": "kyloren123!"
+}
+
+###
+
+### 3. GET ALL USERS - Hämta alla registrerade användare
+GET {{baseUrl}}/api/auth/users
+
+###
+
+### 4. CREATE LFG SESSION - Skapa en ny LFG session (kräver auth)
+POST {{baseUrl}}/api/lfg
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
+
+{
+  "playerName": "Kylo",
+  "gameTitle": "Valorant",
+  "discordTag": "kylo_ren#1234",
+  "description": "Letar efter 2 stycken för rankad 5-stack"
+}
+
+###
+
+### 5. GET ALL LFG SESSIONS - Hämta alla LFG sessioner (kräver auth)
+GET {{baseUrl}}/api/lfg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
+
+### ============================================
+### INSTRUKTIONER:
+### ============================================
+### 1. Starta API: cd src/backend/FindingTheSquad.WebApi && dotnet run
+### 2. Kör testen i ordning (#1-#5)
+### 3. För #2 (Login): Kopiera "token" från response
+### 4. Sätt token i #4 och #5 vid "Authorization: Bearer [TOKEN]"
+### 5. Alla should return 200 OK!
+###
+### API Endpoints klara för FRONTEND:
+### ✅ POST   /api/auth/register     - Skapa användare
+### ✅ POST   /api/auth/login        - Logga in
+### ✅ GET    /api/auth/users        - Lista alla users
+### ✅ POST   /api/lfg               - Skapa LFG session
+### ✅ GET    /api/lfg               - Lista alla sessions
+### ============================================
