@@ -22,11 +22,17 @@ public class UserRepository : IUserRepository
     public async Task<User?> GetByIdAsync(Guid id)
         => await _context.Users.FindAsync(id);
 
+    public async Task<User?> GetByDiscordIdAsync(string discordId)
+        => await _context.Users.FirstOrDefaultAsync(u => u.DiscordId == discordId);
+
     public async Task<List<User>> GetAllAsync()
         => await _context.Users.ToListAsync();
 
     public async Task AddAsync(User user)
         => await _context.Users.AddAsync(user);
+
+    public async Task UpdateAsync(User user)
+        => _context.Users.Update(user);
 
     public async Task SaveChangesAsync()
         => await _context.SaveChangesAsync();

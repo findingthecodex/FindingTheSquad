@@ -5,6 +5,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
 import CreateLFG from './pages/CreateLFG';
+import DiscordCallback from './pages/DiscordCallback';
 import './App.css';
 
 function ProtectedRoute({ children }) {
@@ -18,6 +19,7 @@ function AppContent() {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/auth/discord/callback" element={<DiscordCallback />} />
       <Route
         path="/dashboard"
         element={

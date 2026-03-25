@@ -30,6 +30,14 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [HttpPost("discord/callback")]
+    public async Task<IActionResult> DiscordCallback([FromBody] DiscordCallbackRequest request)
+    {
+        var command = new DiscordLoginCommand(request.Code, request.State);
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
     [HttpGet("users")]
     public async Task<IActionResult> GetAllUsers()
     {
@@ -37,4 +45,6 @@ public class AuthController : ControllerBase
         return Ok(users);
     }
 }
+
+public record DiscordCallbackRequest(string Code, string State);
 

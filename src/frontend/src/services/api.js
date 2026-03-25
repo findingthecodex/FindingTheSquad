@@ -23,6 +23,9 @@ export const authService = {
   
   login: (email, password) =>
     API.post('/auth/login', { email, password }),
+
+  discordCallback: (code, state) =>
+    API.post('/auth/discord/callback', { code, state }),
   
   getUsers: () =>
     API.get('/auth/users'),
