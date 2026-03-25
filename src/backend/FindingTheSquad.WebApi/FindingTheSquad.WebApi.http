@@ -1,6 +1,62 @@
-@FindingTheSquad.WebApi_HostAddress = http://localhost:5121
+@baseUrl = http://localhost:5121
+@contentType = application/json
 
-GET {{FindingTheSquad.WebApi_HostAddress}}/weatherforecast/
-Accept: application/json
+### ============================================
+### SMOKE TESTS - FindingTheSquad API
+### ============================================
+
+### 1. REGISTER - Skapa ny användare
+POST {{baseUrl}}/api/auth/register
+Content-Type: {{contentType}}
+
+{
+  "email": "kyle.ren@gmail.com",
+  "username": "kylo_ren",
+  "password": "kyloren123!"
+}
 
 ###
+
+### 2. LOGIN - Logga in och få token
+POST {{baseUrl}}/api/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "kyle.ren@gmail.com",
+  "password": "kyloren123!"
+}
+
+###
+
+### 3. CREATE LFG SESSION - Skapa en LFG session (kräver autentisering)
+POST {{baseUrl}}/api/lfg
+Content-Type: {{contentType}}
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+{
+  "playerName": "TestPlayer",
+  "gameTitle": "Valorant",
+  "discordTag": "TestPlayer#1234",
+  "description": "Letar efter 2 stycken för rankad play"
+}
+
+###
+
+### 4. GET ALL LFG SESSIONS - Hämta alla sessioner
+GET {{baseUrl}}/api/lfg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+
+###
+
+### ============================================
+### SMOKE TEST INSTRUKTIONER:
+### ============================================
+### 1. Starta API: cd src/backend/FindingTheSquad.WebApi && dotnet run
+### 2. Kör #1 (Register) - Notera svaret
+### 3. Kör #2 (Login) - Kopiera "token" från svaret
+### 4. Sätt token i #3 och #4 vid "Authorization: Bearer"
+### 5. Kör #3 (Create) - Ska returnera ID
+### 6. Kör #4 (Get All) - Ska returnera lista med sessioner
+###
+### Alla ska returnera 200 OK!
+### ============================================
