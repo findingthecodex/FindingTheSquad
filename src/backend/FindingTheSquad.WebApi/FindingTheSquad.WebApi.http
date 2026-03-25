@@ -31,7 +31,8 @@ Content-Type: {{contentType}}
 ### 3. CREATE LFG SESSION - Skapa en LFG session (kräver autentisering)
 POST {{baseUrl}}/api/lfg
 Content-Type: {{contentType}}
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
+
 
 {
   "playerName": "TestPlayer",
@@ -44,9 +45,18 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 
 ### 4. GET ALL LFG SESSIONS - Hämta alla sessioner
 GET {{baseUrl}}/api/lfg
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
 
 ###
+
+### 5. GET ALL USERS - Hämta alla registrerade användare
+GET {{baseUrl}}/api/auth/users
+
+###
+
+### 6. GET ALL LFG SESSIONS - Hämta alla sessioner
+GET {{baseUrl}}/api/lfg
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9uYW1laWRlbnRpZmllciI6ImU0MzAyYjU1LWQwN2MtNDc2My1hNTY0LWI0NTE0MDVlYmU2YiIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL2VtYWlsYWRkcmVzcyI6Imt5bGUucmVuQGdtYWlsLmNvbSIsImh0dHA6Ly9zY2hlbWFzLnhtbHNvYXAub3JnL3dzLzIwMDUvMDUvaWRlbnRpdHkvY2xhaW1zL25hbWUiOiJreWxvX3JlbiIsImh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd3MvMjAwOC8wNi9pZGVudGl0eS9jbGFpbXMvcm9sZSI6IlVzZXIiLCJleHAiOjE3NzQ0NDg4NTcsImlzcyI6IkZpbmRpbmdUaGVTcXVhZCIsImF1ZCI6IkZpbmRpbmdUaGVTcXVhZFVzZXJzIn0.-pVRFLKTZikWhqCiKU4v0Npi1c3gG0OAYWY1JSZ3FNE
 
 ### ============================================
 ### SMOKE TEST INSTRUKTIONER:
