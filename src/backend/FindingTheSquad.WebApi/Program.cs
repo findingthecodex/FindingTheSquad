@@ -79,11 +79,23 @@ app.UseAuthorization();
 
 app.MapControllers();
 
-// Apply migrations automatically on startup
+// Apply migrations and seed data automatically on startup
 using (var scope = app.Services.CreateScope())
 {
     var dbContext = scope.ServiceProvider.GetRequiredService<AppDbContext>();
     dbContext.Database.Migrate();
+    
+    // Seed test user if database is empty
+    if (!dbContext.Users.Any())
+    {
+        var testUser = new FindingTheSquad.Domain.User(
+            "kyle.ren@gmail.com",
+            "kyloren",
+            BCrypt.Net.BCrypt.HashPassword("kyloren123!")
+        );
+        dbContext.Users.Add(testUser);
+        dbContext.SaveChanges();
+    }
 }
 
 app.Run();

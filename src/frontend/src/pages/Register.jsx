@@ -39,6 +39,7 @@ export default function Register() {
               onChange={(e) => setEmail(e.target.value)}
               required
               disabled={isLoading}
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -50,6 +51,7 @@ export default function Register() {
               onChange={(e) => setUsername(e.target.value)}
               required
               disabled={isLoading}
+              autoComplete="off"
             />
           </div>
           <div className="form-group">
@@ -61,6 +63,7 @@ export default function Register() {
               onChange={(e) => setPassword(e.target.value)}
               required
               disabled={isLoading}
+              autoComplete="new-password"
             />
           </div>
           <div className="form-group">
@@ -72,6 +75,7 @@ export default function Register() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               required
               disabled={isLoading}
+              autoComplete="new-password"
             />
           </div>
           {error && <div className="error-message">{error}</div>}
