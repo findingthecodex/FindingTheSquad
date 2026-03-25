@@ -54,3 +54,8 @@ TestResult.xml
 nunit-*.xml
 
 .idea/
+
+# Database files
+*.db
+*.db-shm
+*.db-wal
