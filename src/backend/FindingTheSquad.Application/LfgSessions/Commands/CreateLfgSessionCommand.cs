@@ -6,5 +6,6 @@ public record CreateLfgSessionCommand(
     string PlayerName,
     string GameTitle,
     string DiscordTag,
-    string Description
+    string Description,
+    string Console
 ) : IRequest<Guid>;

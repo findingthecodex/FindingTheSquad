@@ -17,6 +17,9 @@ public class LfgSession
     // Beskrivning, t.ex. "Letar efter 2 stycken för rankad play"
     public string Description { get; private set; } = string.Empty;
     
+    // Vilken konsol/plattform?
+    public string Console { get; private set; } = string.Empty;
+    
     public DateTime CreatedAt { get; private set; }
     public bool IsActive { get; private set; }
 
@@ -24,13 +27,14 @@ public class LfgSession
     private LfgSession() { }
 
     // Vår "riktiga" konstruktor som vi använder när vi skapar en ny session
-    public LfgSession(string playerName, string gameTitle, string discordTag, string description)
+    public LfgSession(string playerName, string gameTitle, string discordTag, string description, string console)
     {
         Id = Guid.NewGuid();
         PlayerName = playerName;
         GameTitle = gameTitle;
         DiscordTag = discordTag;
         Description = description;
+        Console = console;
         CreatedAt = DateTime.UtcNow;
         IsActive = true;
     }

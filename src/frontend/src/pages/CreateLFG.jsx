@@ -8,6 +8,7 @@ export default function CreateLFG() {
   const [formData, setFormData] = useState({
     playerName: '',
     gameTitle: '',
+    console: '',
     discordTag: '',
     description: '',
   });
@@ -36,12 +37,14 @@ export default function CreateLFG() {
         formData.playerName,
         formData.gameTitle,
         formData.discordTag,
-        formData.description
+        formData.description,
+        formData.console
       );
       setSuccess('LFG session created successfully!');
       setFormData({
         playerName: '',
         gameTitle: '',
+        console: '',
         discordTag: '',
         description: '',
       });
@@ -102,6 +105,24 @@ export default function CreateLFG() {
                 required
                 disabled={isLoading}
               />
+            </div>
+
+            <div className="form-group">
+              <label htmlFor="console">Console/Platform *</label>
+              <select
+                id="console"
+                name="console"
+                value={formData.console}
+                onChange={handleChange}
+                required
+                disabled={isLoading}
+              >
+                <option value="">Select a platform</option>
+                <option value="PC">PC</option>
+                <option value="PS5">PS5</option>
+                <option value="Xbox Series X/S">Xbox Series X/S</option>
+                <option value="Nintendo Switch">Nintendo Switch</option>
+              </select>
             </div>
 
             <div className="form-group">

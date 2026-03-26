@@ -19,7 +19,8 @@ public class CreateLfgSessionHandler : IRequestHandler<CreateLfgSessionCommand, 
             request.PlayerName,
             request.GameTitle,
             request.DiscordTag,
-            request.Description
+            request.Description,
+            request.Console
         );
 
         await _repository.AddAsync(session);

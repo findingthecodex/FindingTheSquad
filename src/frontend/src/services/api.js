@@ -33,11 +33,17 @@ export const authService = {
 
 // LFG endpoints
 export const lfgService = {
-  createSession: (playerName, gameTitle, discordTag, description) =>
-    API.post('/lfg', { playerName, gameTitle, discordTag, description }),
+  createSession: (playerName, gameTitle, discordTag, description, console) =>
+    API.post('/lfg', { playerName, gameTitle, discordTag, description, console }),
   
   getSessions: () =>
     API.get('/lfg'),
+
+  getFilteredSessions: (gameTitle, console) =>
+    API.get('/lfg/filter', { params: { gameTitle, console } }),
+
+  getSimilarSessions: (gameTitle, console) =>
+    API.get('/lfg/filter', { params: { gameTitle, console } }),
 };
 
 export default API;

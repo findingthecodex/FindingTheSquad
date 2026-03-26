@@ -1,9 +1,11 @@
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { TabProvider } from './context/TabContext';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Dashboard from './pages/Dashboard';
+import TabbedLayout from './pages/TabbedLayout';
 import CreateLFG from './pages/CreateLFG';
 import DiscordCallback from './pages/DiscordCallback';
 import './App.css';
@@ -24,7 +26,9 @@ function AppContent() {
         path="/dashboard"
         element={
           <ProtectedRoute>
-            <Dashboard />
+            <TabProvider>
+              <TabbedLayout />
+            </TabProvider>
           </ProtectedRoute>
         }
       />

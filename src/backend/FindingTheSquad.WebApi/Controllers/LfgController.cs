@@ -29,4 +29,11 @@ public class LfgController : ControllerBase
         var sessions = await _mediator.Send(new GetLfgSessionsQuery());
         return Ok(sessions);
     }
+
+    [HttpGet("filter")]
+    public async Task<IActionResult> GetFiltered([FromQuery] string? gameTitle, [FromQuery] string? console)
+    {
+        var sessions = await _mediator.Send(new GetFilteredLfgSessionsQuery(gameTitle, console));
+        return Ok(sessions);
+    }
 }

@@ -1,0 +1,258 @@
+.my-sessions-tab {
+  padding: 40px 50px;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.sessions-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.sessions-header h2 {
+  font-size: 32px;
+  margin: 0;
+  color: #fff;
+  font-weight: 700;
+}
+
+.create-new-btn {
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  white-space: nowrap;
+}
+
+.create-new-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 212, 255, 0.3);
+}
+
+.error-message {
+  background-color: rgba(255, 77, 77, 0.1);
+  border: 1px solid rgba(255, 77, 77, 0.3);
+  color: #ff6b6b;
+  padding: 16px;
+  border-radius: 8px;
+  margin-bottom: 24px;
+}
+
+.loading {
+  text-align: center;
+  padding: 60px 20px;
+  color: #a0a0a0;
+  font-size: 16px;
+}
+
+.empty-state {
+  text-align: center;
+  padding: 80px 40px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 0, 110, 0.05) 100%);
+  border: 1px dashed rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+}
+
+.empty-icon {
+  font-size: 64px;
+  margin-bottom: 16px;
+}
+
+.empty-state h3 {
+  font-size: 24px;
+  margin: 0 0 8px 0;
+  color: #fff;
+  font-weight: 600;
+}
+
+.empty-state p {
+  color: #a0a0a0;
+  margin: 0 0 32px 0;
+  font-size: 16px;
+}
+
+.empty-action-btn {
+  padding: 12px 32px;
+  background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.empty-action-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 16px rgba(0, 212, 255, 0.3);
+}
+
+.sessions-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.session-item {
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 12px;
+  padding: 24px;
+  transition: all 0.3s ease;
+}
+
+.session-item:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 110, 0.05) 100%);
+  border-color: #00d4ff;
+  box-shadow: 0 8px 24px rgba(0, 212, 255, 0.1);
+}
+
+.session-item-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+  gap: 16px;
+}
+
+.session-title {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.session-title h3 {
+  margin: 0;
+  color: #00d4ff;
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.console-badge {
+  display: inline-block;
+  background-color: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+  padding: 4px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  width: fit-content;
+  text-transform: uppercase;
+}
+
+.session-status {
+  display: flex;
+  gap: 8px;
+}
+
+.status-active,
+.status-completed {
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.status-active {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+}
+
+.status-completed {
+  background-color: rgba(156, 39, 176, 0.2);
+  color: #b39ddb;
+}
+
+.session-item-content {
+  margin-bottom: 20px;
+}
+
+.session-item-content p {
+  margin: 0 0 12px 0;
+  color: #ccc;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.session-item-content strong {
+  color: #00d4ff;
+}
+
+.created-date {
+  color: #707070;
+  font-size: 12px;
+  margin-top: 16px !important;
+}
+
+.session-item-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.action-btn {
+  padding: 10px 16px;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.mark-completed-btn {
+  background-color: rgba(76, 175, 80, 0.2);
+  color: #4caf50;
+  border: 1px solid rgba(76, 175, 80, 0.3);
+}
+
+.mark-completed-btn:hover {
+  background-color: rgba(76, 175, 80, 0.3);
+  border-color: #4caf50;
+}
+
+.delete-btn {
+  background-color: rgba(255, 77, 77, 0.1);
+  color: #ff6b6b;
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
+.delete-btn:hover {
+  background-color: rgba(255, 77, 77, 0.2);
+  border-color: #ff6b6b;
+}
+
+@media (max-width: 768px) {
+  .sessions-header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .create-new-btn {
+    width: 100%;
+  }
+
+  .session-item-header {
+    flex-direction: column;
+  }
+
+  .session-item-actions {
+    flex-direction: column;
+  }
+
+  .action-btn {
+    width: 100%;
+  }
+}
+
