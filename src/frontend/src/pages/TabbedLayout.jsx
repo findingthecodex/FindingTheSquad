@@ -1,6 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTab } from '../context/TabContext';
+import { useLocation } from 'react-router-dom';
 import HomeTab from './tabs/HomeTab';
 import LfgPostsTab from './tabs/LfgPostsTab';
 import MySessionsTab from './tabs/MySessionsTab';
@@ -11,6 +12,14 @@ import './TabbedLayout.css';
 export default function TabbedLayout() {
   const { user, logout } = useAuth();
   const { activeTab, setActiveTab } = useTab();
+  const location = useLocation();
+
+  // Switch to chat tab if openChat state is provided
+  useEffect(() => {
+    if (location.state?.openChat) {
+      setActiveTab('chat');
+    }
+  }, [location.state?.openChat, setActiveTab]);
 
   const tabs = [
     { id: 'home', label: '🏠 Home', icon: '🏠' },

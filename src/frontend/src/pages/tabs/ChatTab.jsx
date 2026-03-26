@@ -1,7 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import './ChatTab.css';
 
 export default function ChatTab() {
+  const location = useLocation();
   const [conversations, setConversations] = useState([
     {
       id: 1,
@@ -27,6 +29,37 @@ export default function ChatTab() {
     { id: 2, sender: 'You', text: 'Sure! Let me log in.', timestamp: new Date(Date.now() - 1000 * 60 * 4) },
   ]);
   const [messageInput, setMessageInput] = useState('');
+
+  // Handle incoming chat from View button
+  useEffect(() => {
+    if (location.state?.openChat) {
+      const session = location.state.openChat;
+      const existingConv = conversations.find(c => c.user === session.playerName);
+      
+      if (existingConv) {
+        setSelectedConversation(existingConv);
+      } else {
+        const newConv = {
+          id: Math.max(...conversations.map(c => c.id), 0) + 1,
+          user: session.playerName,
+          game: session.gameTitle,
+          lastMessage: 'Conversation started',
+          timestamp: new Date(),
+          unread: 0,
+        };
+        setConversations([newConv, ...conversations]);
+        setSelectedConversation(newConv);
+        setMessages([
+          { 
+            id: 1, 
+            sender: session.playerName, 
+            text: `Hi! I'm looking for teammates for ${session.gameTitle}. ${session.description}`, 
+            timestamp: new Date() 
+          }
+        ]);
+      }
+    }
+  }, [location.state?.openChat]);
 
   const handleSendMessage = () => {
     if (messageInput.trim()) {

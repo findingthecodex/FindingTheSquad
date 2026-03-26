@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { lfgService } from '../../services/api';
+import SessionDetailModal from '../../components/SessionDetailModal';
+import { useNavigate } from 'react-router-dom';
+import { GAMES, CONSOLES } from '../../constants/games';
 import './BrowseTab.css';
 
 const CONSOLES = ['PC', 'PS5', 'Xbox Series X/S', 'Nintendo Switch'];
@@ -10,9 +13,13 @@ export default function BrowseTab() {
   const [selectedConsole, setSelectedConsole] = useState(null);
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSession, setSelectedSession] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    fetchGames();
+    // Use predefined games list
+    setGames(GAMES);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -21,18 +28,15 @@ export default function BrowseTab() {
     }
   }, [selectedGame, selectedConsole]);
 
-  const fetchGames = async () => {
+  const filterSessions = async () => {
     try {
-      setIsLoading(true);
-      const response = await lfgService.getSessions();
-      const uniqueGames = [...new Set(response.data.map(s => s.gameTitle))].sort();
-      setGames(uniqueGames);
+      const response = await lfgService.getFilteredSessions(selectedGame, selectedConsole);
+      setFilteredSessions(response.data);
     } catch (err) {
-      console.error('Failed to load games:', err);
-    } finally {
-      setIsLoading(false);
+      console.error('Failed to filter sessions:', err);
     }
   };
+
 
   const filterSessions = async () => {
     try {
@@ -107,7 +111,7 @@ export default function BrowseTab() {
                           </div>
                           <p className="result-description">{session.description}</p>
                           <p className="result-discord"><strong>Discord:</strong> {session.discordTag}</p>
-                          <button className="result-action-btn">Message Player</button>
+                          <button className="result-action-btn" onClick={() => setSelectedSession(session)}>View</button>
                         </div>
                       ))}
                     </div>
@@ -124,6 +128,13 @@ export default function BrowseTab() {
           )}
         </div>
       </div>
+      <SessionDetailModal 
+        session={selectedSession}
+        onClose={() => setSelectedSession(null)}
+        onChat={(session) => {
+          navigate('/dashboard', { state: { openChat: session } });
+        }}
+      />
     </div>
   );
 }

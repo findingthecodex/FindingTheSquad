@@ -203,8 +203,7 @@
   border-top: 1px solid rgba(0, 212, 255, 0.1);
 }
 
-.join-btn,
-.message-btn {
+.view-btn {
   flex: 1;
   padding: 8px 12px;
   border: none;
@@ -213,28 +212,15 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.3s ease;
-}
-
-.join-btn {
   background: linear-gradient(135deg, #00d4ff 0%, #0099cc 100%);
   color: white;
 }
 
-.join-btn:hover {
+.view-btn:hover {
   box-shadow: 0 6px 16px rgba(0, 212, 255, 0.3);
   transform: scale(1.02);
 }
 
-.message-btn {
-  background-color: rgba(255, 255, 255, 0.1);
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-}
-
-.message-btn:hover {
-  background-color: rgba(255, 255, 255, 0.15);
-  border-color: #fff;
-}
 
 @media (max-width: 1024px) {
   .posts-grid {
