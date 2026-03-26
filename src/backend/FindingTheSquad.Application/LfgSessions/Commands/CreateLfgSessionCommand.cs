@@ -3,6 +3,7 @@ using MediatR;
 namespace FindingTheSquad.Application.LfgSessions.Commands;
 
 public record CreateLfgSessionCommand(
+    Guid UserId,
     string PlayerName,
     string GameTitle,
     string DiscordTag,

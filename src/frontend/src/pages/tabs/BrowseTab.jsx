@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { lfgService } from '../../services/api';
 import SessionDetailModal from '../../components/SessionDetailModal';
-import { useNavigate } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
+import { useChat } from '../../context/ChatContext';
+import { useTab } from '../../context/TabContext';
 import { GAMES, CONSOLES } from '../../constants/games';
 import './BrowseTab.css';
 
-const CONSOLES = ['PC', 'PS5', 'Xbox Series X/S', 'Nintendo Switch'];
 
 export default function BrowseTab() {
   const [games, setGames] = useState([]);
@@ -14,7 +15,8 @@ export default function BrowseTab() {
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSession, setSelectedSession] = useState(null);
-  const navigate = useNavigate();
+  const { setSelectedSession: setChatSession } = useChat();
+  const { setActiveTab } = useTab();
 
   useEffect(() => {
     // Use predefined games list
@@ -37,15 +39,6 @@ export default function BrowseTab() {
     }
   };
 
-
-  const filterSessions = async () => {
-    try {
-      const response = await lfgService.getFilteredSessions(selectedGame, selectedConsole);
-      setFilteredSessions(response.data);
-    } catch (err) {
-      console.error('Failed to filter sessions:', err);
-    }
-  };
 
   return (
     <div className="browse-tab">
@@ -132,7 +125,17 @@ export default function BrowseTab() {
         session={selectedSession}
         onClose={() => setSelectedSession(null)}
         onChat={(session) => {
-          navigate('/dashboard', { state: { openChat: session } });
+          console.log('🔍 BrowseTab: Chat button clicked for session:', session);
+          setChatSession({
+            id: session.id,
+            userId: session.userId,
+            playerName: session.playerName,
+            gameTitle: session.gameTitle,
+            description: session.description
+          });
+          console.log('🔍 BrowseTab: Switching to chat tab');
+          setActiveTab('chat');
+          setSelectedSession(null);
         }}
       />
     </div>

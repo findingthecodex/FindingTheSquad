@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { lfgService } from '../../services/api';
 import SessionDetailModal from '../../components/SessionDetailModal';
-import { useNavigate } from 'react-router-dom';
+import { useChat } from '../../context/ChatContext';
+import { useTab } from '../../context/TabContext';
 import { GAMES, CONSOLES } from '../../constants/games';
 import './LfgPostsTab.css';
 
@@ -13,7 +14,8 @@ export default function LfgPostsTab() {
   const [gameFilter, setGameFilter] = useState('');
   const [consoleFilter, setConsoleFilter] = useState('');
   const [selectedSession, setSelectedSession] = useState(null);
-  const navigate = useNavigate();
+  const { setSelectedSession: setChatSession } = useChat();
+  const { setActiveTab } = useTab();
 
   useEffect(() => {
     fetchSessions();
@@ -139,7 +141,17 @@ export default function LfgPostsTab() {
         session={selectedSession}
         onClose={() => setSelectedSession(null)}
         onChat={(session) => {
-          navigate('/dashboard', { state: { openChat: session } });
+          console.log('📋 LfgPostsTab: Chat button clicked for session:', session);
+          setChatSession({
+            id: session.id,
+            userId: session.userId,
+            playerName: session.playerName,
+            gameTitle: session.gameTitle,
+            description: session.description
+          });
+          console.log('📋 LfgPostsTab: Switching to chat tab');
+          setActiveTab('chat');
+          setSelectedSession(null);
         }}
       />
     </div>

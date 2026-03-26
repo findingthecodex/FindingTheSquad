@@ -1,8 +1,9 @@
 import React, { useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useTab } from '../context/TabContext';
-import { useLocation } from 'react-router-dom';
-import HomeTab from './tabs/HomeTab';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ChatProvider } from '../context/ChatContext';
+import Dashboard from './Dashboard';
 import LfgPostsTab from './tabs/LfgPostsTab';
 import MySessionsTab from './tabs/MySessionsTab';
 import BrowseTab from './tabs/BrowseTab';
@@ -13,6 +14,7 @@ export default function TabbedLayout() {
   const { user, logout } = useAuth();
   const { activeTab, setActiveTab } = useTab();
   const location = useLocation();
+  const navigate = useNavigate();
 
   // Switch to chat tab if openChat state is provided
   useEffect(() => {
@@ -31,12 +33,13 @@ export default function TabbedLayout() {
 
   const handleLogout = () => {
     logout();
+    navigate('/');
   };
 
   const renderTabContent = () => {
     switch (activeTab) {
       case 'home':
-        return <HomeTab />;
+        return <Dashboard />;
       case 'lfg-posts':
         return <LfgPostsTab />;
       case 'my-sessions':
@@ -46,51 +49,53 @@ export default function TabbedLayout() {
       case 'chat':
         return <ChatTab />;
       default:
-        return <HomeTab />;
+        return <Dashboard />;
     }
   };
 
   return (
-    <div className="tabbed-layout">
-      {/* Left Sidebar */}
-      <aside className="sidebar">
-        <div className="sidebar-header">
-          <h1 className="logo">🎮</h1>
-          <h2 className="brand">FindingTheSquad</h2>
-        </div>
-
-        <nav className="sidebar-nav">
-          {tabs.map((tab) => (
-            <button
-              key={tab.id}
-              className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
-              onClick={() => setActiveTab(tab.id)}
-              title={tab.label}
-            >
-              <span className="nav-icon">{tab.icon}</span>
-              <span className="nav-label">{tab.label.replace(/^[^\s]+ /, '')}</span>
-            </button>
-          ))}
-        </nav>
-
-        <div className="sidebar-footer">
-          <div className="user-info">
-            <div className="user-avatar">{user?.username?.[0]?.toUpperCase() || 'U'}</div>
-            <div className="user-details">
-              <p className="user-name">{user?.username || 'User'}</p>
-            </div>
+    <ChatProvider>
+      <div className="tabbed-layout">
+        {/* Left Sidebar */}
+        <aside className="sidebar">
+          <div className="sidebar-header">
+            <h1 className="logo">🎮</h1>
+            <h2 className="brand">FindingTheSquad</h2>
           </div>
-          <button className="logout-btn" onClick={handleLogout} title="Logout">
-            Logout
-          </button>
-        </div>
-      </aside>
 
-      {/* Main Content */}
-      <main className="main-content">
-        {renderTabContent()}
-      </main>
-    </div>
+          <nav className="sidebar-nav">
+            {tabs.map((tab) => (
+              <button
+                key={tab.id}
+                className={`nav-button ${activeTab === tab.id ? 'active' : ''}`}
+                onClick={() => setActiveTab(tab.id)}
+                title={tab.label}
+              >
+                <span className="nav-icon">{tab.icon}</span>
+                <span className="nav-label">{tab.label.replace(/^[^\s]+ /, '')}</span>
+              </button>
+            ))}
+          </nav>
+
+          <div className="sidebar-footer">
+            <div className="user-info">
+              <div className="user-avatar">{user?.username?.[0]?.toUpperCase() || 'U'}</div>
+              <div className="user-details">
+                <p className="user-name">{user?.username || 'User'}</p>
+              </div>
+            </div>
+            <button className="logout-btn" onClick={handleLogout} title="Logout">
+              Logout
+            </button>
+          </div>
+        </aside>
+
+        {/* Main Content */}
+        <main className="main-content">
+          {renderTabContent()}
+        </main>
+      </div>
+    </ChatProvider>
   );
 }
 

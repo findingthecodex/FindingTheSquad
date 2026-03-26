@@ -16,6 +16,7 @@ public class CreateLfgSessionHandler : IRequestHandler<CreateLfgSessionCommand, 
     public async Task<Guid> Handle(CreateLfgSessionCommand request, CancellationToken cancellationToken)
     {
         var session = new LfgSession(
+            request.UserId,
             request.PlayerName,
             request.GameTitle,
             request.DiscordTag,

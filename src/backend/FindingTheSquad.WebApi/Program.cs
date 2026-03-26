@@ -65,6 +65,7 @@ builder.Services.AddSingleton(discordOptions);
 
 builder.Services.AddScoped<ILfgRepository, LfgRepository>();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
+builder.Services.AddScoped<IMessageRepository, MessageRepository>();
 builder.Services.AddScoped<ITokenService, JwtTokenService>();
 
 builder.Services.AddDbContext<AppDbContext>(options =>

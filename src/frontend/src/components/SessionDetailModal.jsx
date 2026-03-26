@@ -5,7 +5,17 @@ export default function SessionDetailModal({ session, onClose, onChat }) {
   if (!session) return null;
 
   const handleChatClick = () => {
-    onChat(session);
+    console.log('💬 SessionDetailModal: Chat button clicked!');
+    console.log('   - Calling onChat callback with session:', session);
+    console.log('   - onChat function exists:', !!onChat);
+    
+    if (onChat) {
+      onChat(session);
+    } else {
+      console.error('❌ SessionDetailModal: onChat callback is undefined!');
+    }
+    
+    console.log('   - Calling onClose callback');
     onClose();
   };
 

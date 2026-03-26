@@ -2,6 +2,8 @@ using FindingTheSquad.Application.LfgSessions.Queries;
 using FindingTheSquad.Application.LfgSessions.Commands;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace FindingTheSquad.WebApi.Controllers;
 
@@ -17,8 +19,20 @@ public class LfgController : ControllerBase
     }
 
     [HttpPost]
-    public async Task<IActionResult> Create(CreateLfgSessionCommand command)
+    [Authorize]
+    public async Task<IActionResult> Create([FromBody] CreateLfgSessionCommand command)
     {
+        // Get the current user ID from token
+        var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+        
+        if (string.IsNullOrEmpty(userId) || !Guid.TryParse(userId, out var parsedUserId))
+        {
+            return Unauthorized("User not authenticated");
+        }
+
+        // Add UserId to command
+        command = command with { UserId = parsedUserId };
+        
         var id = await _mediator.Send(command);
         return Ok(id);
     }

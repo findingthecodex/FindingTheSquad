@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { lfgService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { useChat } from '../context/ChatContext';
+import { useTab } from '../context/TabContext';
 import './Dashboard.css';
 
 export default function Dashboard() {
@@ -9,7 +10,8 @@ export default function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState('');
   const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const { setSelectedSession } = useChat();
+  const { setActiveTab } = useTab();
 
   useEffect(() => {
     fetchSessions();
@@ -30,11 +32,12 @@ export default function Dashboard() {
 
   const handleLogout = () => {
     logout();
-    navigate('/login');
   };
 
   const handleCreateSession = () => {
-    navigate('/create-lfg');
+    // Direktnav till CreateLFG sidan är redan en separat ruta
+    // Men vi kan göra det via tab senare
+    alert('Gå till "Min sessioner" för att skapa en ny session');
   };
 
   return (
@@ -85,7 +88,23 @@ export default function Dashboard() {
                   </p>
                 </div>
                 <div className="session-actions">
-                  <button className="join-btn">Join Session</button>
+                  <button 
+                    className="join-btn"
+                    onClick={() => {
+                      console.log('🎮 Dashboard: Join Session clicked for session:', session);
+                      setSelectedSession({
+                        id: session.id,
+                        userId: session.userId,
+                        playerName: session.playerName,
+                        gameTitle: session.gameTitle,
+                        description: session.description
+                      });
+                      console.log('🎮 Dashboard: Now switching to chat tab');
+                      setActiveTab('chat');
+                    }}
+                  >
+                    Join Session
+                  </button>
                 </div>
               </div>
             ))}
