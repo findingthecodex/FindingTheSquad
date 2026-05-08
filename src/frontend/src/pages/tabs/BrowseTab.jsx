@@ -1,8 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { lfgService } from '../../services/api';
+import SessionDetailModal from '../../components/SessionDetailModal';
+import { useAuth } from '../../context/AuthContext';
+import { useChat } from '../../context/ChatContext';
+import { useTab } from '../../context/TabContext';
+import { GAMES, CONSOLES } from '../../constants/games';
 import './BrowseTab.css';
 
-const CONSOLES = ['PC', 'PS5', 'Xbox Series X/S', 'Nintendo Switch'];
 
 export default function BrowseTab() {
   const [games, setGames] = useState([]);
@@ -10,9 +14,14 @@ export default function BrowseTab() {
   const [selectedConsole, setSelectedConsole] = useState(null);
   const [filteredSessions, setFilteredSessions] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [selectedSession, setSelectedSession] = useState(null);
+  const { setSelectedSession: setChatSession } = useChat();
+  const { setActiveTab } = useTab();
 
   useEffect(() => {
-    fetchGames();
+    // Use predefined games list
+    setGames(GAMES);
+    setIsLoading(false);
   }, []);
 
   useEffect(() => {
@@ -20,19 +29,6 @@ export default function BrowseTab() {
       filterSessions();
     }
   }, [selectedGame, selectedConsole]);
-
-  const fetchGames = async () => {
-    try {
-      setIsLoading(true);
-      const response = await lfgService.getSessions();
-      const uniqueGames = [...new Set(response.data.map(s => s.gameTitle))].sort();
-      setGames(uniqueGames);
-    } catch (err) {
-      console.error('Failed to load games:', err);
-    } finally {
-      setIsLoading(false);
-    }
-  };
 
   const filterSessions = async () => {
     try {
@@ -42,6 +38,7 @@ export default function BrowseTab() {
       console.error('Failed to filter sessions:', err);
     }
   };
+
 
   return (
     <div className="browse-tab">
@@ -107,7 +104,7 @@ export default function BrowseTab() {
                           </div>
                           <p className="result-description">{session.description}</p>
                           <p className="result-discord"><strong>Discord:</strong> {session.discordTag}</p>
-                          <button className="result-action-btn">Message Player</button>
+                          <button className="result-action-btn" onClick={() => setSelectedSession(session)}>View</button>
                         </div>
                       ))}
                     </div>
@@ -124,6 +121,23 @@ export default function BrowseTab() {
           )}
         </div>
       </div>
+      <SessionDetailModal 
+        session={selectedSession}
+        onClose={() => setSelectedSession(null)}
+        onChat={(session) => {
+          console.log('🔍 BrowseTab: Chat button clicked for session:', session);
+          setChatSession({
+            id: session.id,
+            userId: session.userId,
+            playerName: session.playerName,
+            gameTitle: session.gameTitle,
+            description: session.description
+          });
+          console.log('🔍 BrowseTab: Switching to chat tab');
+          setActiveTab('chat');
+          setSelectedSession(null);
+        }}
+      />
     </div>
   );
 }

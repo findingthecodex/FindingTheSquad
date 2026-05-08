@@ -46,5 +46,14 @@ export const lfgService = {
     API.get('/lfg/filter', { params: { gameTitle, console } }),
 };
 
+// Chat endpoints
+export const chatService = {
+  sendMessage: (receiverId, lfgSessionId, content) =>
+    API.post('/chat/send', { receiverId, lfgSessionId, content }),
+  
+  getConversation: (otherUserId, lfgSessionId) =>
+    API.get('/chat/conversation', { params: { otherUserId, lfgSessionId } }),
+};
+
 export default API;
 

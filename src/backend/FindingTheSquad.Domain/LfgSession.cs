@@ -5,6 +5,9 @@ public class LfgSession
     // Unikt ID för varje annons
     public Guid Id { get; private set; }
     
+    // Vem skapade sessionen?
+    public Guid UserId { get; private set; }
+    
     // Vem är spelaren?
     public string PlayerName { get; private set; } = string.Empty;
     
@@ -27,9 +30,10 @@ public class LfgSession
     private LfgSession() { }
 
     // Vår "riktiga" konstruktor som vi använder när vi skapar en ny session
-    public LfgSession(string playerName, string gameTitle, string discordTag, string description, string console)
+    public LfgSession(Guid userId, string playerName, string gameTitle, string discordTag, string description, string console)
     {
         Id = Guid.NewGuid();
+        UserId = userId;
         PlayerName = playerName;
         GameTitle = gameTitle;
         DiscordTag = discordTag;

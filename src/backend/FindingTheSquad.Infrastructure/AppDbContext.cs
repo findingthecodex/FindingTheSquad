@@ -12,6 +12,7 @@ public class AppDbContext : DbContext
     // Här definierar vi vår tabell
     public DbSet<LfgSession> LfgSessions => Set<LfgSession>();
     public DbSet<User> Users => Set<User>();
+    public DbSet<Message> Messages => Set<Message>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -35,6 +36,16 @@ public class AppDbContext : DbContext
             entity.HasIndex(e => e.Email).IsUnique();
             entity.HasIndex(e => e.Username).IsUnique();
             entity.HasIndex(e => e.DiscordId).IsUnique();
+        });
+
+        // Message configuration
+        modelBuilder.Entity<Message>(entity =>
+        {
+            entity.HasKey(e => e.Id);
+            entity.Property(e => e.Content).IsRequired();
+            entity.Property(e => e.CreatedAt).IsRequired();
+            entity.HasIndex(e => new { e.SenderId, e.ReceiverId });
+            entity.HasIndex(e => e.LfgSessionId);
         });
     }
 }

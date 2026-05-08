@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { lfgService } from '../services/api';
 import { useAuth } from '../context/AuthContext';
+import { GAMES } from '../constants/games';
 import './CreateLFG.css';
 
 export default function CreateLFG() {
@@ -95,16 +96,21 @@ export default function CreateLFG() {
 
             <div className="form-group">
               <label htmlFor="gameTitle">Game Title *</label>
-              <input
-                type="text"
+              <select
                 id="gameTitle"
                 name="gameTitle"
                 value={formData.gameTitle}
                 onChange={handleChange}
-                placeholder="e.g., Valorant, CS:GO, League of Legends"
                 required
                 disabled={isLoading}
-              />
+              >
+                <option value="">Select a game</option>
+                {GAMES.map((game) => (
+                  <option key={game} value={game}>
+                    {game}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div className="form-group">

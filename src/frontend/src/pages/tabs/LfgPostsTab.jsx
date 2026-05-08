@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { lfgService } from '../../services/api';
+import SessionDetailModal from '../../components/SessionDetailModal';
+import { useChat } from '../../context/ChatContext';
+import { useTab } from '../../context/TabContext';
+import { GAMES, CONSOLES } from '../../constants/games';
 import './LfgPostsTab.css';
-
-const CONSOLES = ['PC', 'PS5', 'Xbox Series X/S', 'Nintendo Switch'];
 
 export default function LfgPostsTab() {
   const [sessions, setSessions] = useState([]);
@@ -11,7 +13,9 @@ export default function LfgPostsTab() {
   const [error, setError] = useState('');
   const [gameFilter, setGameFilter] = useState('');
   const [consoleFilter, setConsoleFilter] = useState('');
-  const [games, setGames] = useState([]);
+  const [selectedSession, setSelectedSession] = useState(null);
+  const { setSelectedSession: setChatSession } = useChat();
+  const { setActiveTab } = useTab();
 
   useEffect(() => {
     fetchSessions();
@@ -50,11 +54,6 @@ export default function LfgPostsTab() {
     setFilteredSessions(filtered);
   };
 
-  // Extract unique games from sessions
-  useEffect(() => {
-    const uniqueGames = [...new Set(sessions.map(s => s.gameTitle))].sort();
-    setGames(uniqueGames);
-  }, [sessions]);
 
   return (
     <div className="lfg-posts-tab">
@@ -73,7 +72,7 @@ export default function LfgPostsTab() {
             className="filter-select"
           >
             <option value="">All Games</option>
-            {games.map((game) => (
+            {GAMES.map((game) => (
               <option key={game} value={game}>
                 {game}
               </option>
@@ -132,13 +131,29 @@ export default function LfgPostsTab() {
                 </p>
               </div>
               <div className="post-actions">
-                <button className="join-btn">Join Session</button>
-                <button className="message-btn">Message</button>
+                <button className="view-btn" onClick={() => setSelectedSession(session)}>View</button>
               </div>
             </div>
           ))}
         </div>
       )}
+      <SessionDetailModal 
+        session={selectedSession}
+        onClose={() => setSelectedSession(null)}
+        onChat={(session) => {
+          console.log('📋 LfgPostsTab: Chat button clicked for session:', session);
+          setChatSession({
+            id: session.id,
+            userId: session.userId,
+            playerName: session.playerName,
+            gameTitle: session.gameTitle,
+            description: session.description
+          });
+          console.log('📋 LfgPostsTab: Switching to chat tab');
+          setActiveTab('chat');
+          setSelectedSession(null);
+        }}
+      />
     </div>
   );
 }
